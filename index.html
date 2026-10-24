@@ -167,8 +167,6 @@ document.getElementById("invoiceNumber").textContent =
       price: Number(rawPrice)
     });
 
-    document.getElementById("invoiceDate").textContent +=
-      " — Save request sent; verify in Google Sheets.";
   } catch (error) {
     alert("Invoice display created, but sending failed: " + error.message);
   }
