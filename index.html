@@ -139,7 +139,8 @@ async function createInvoice() {
     return;
   }
 
- const invoiceNumber = "INV-" + (Number(localStorage.getItem("lastInvoiceNumber") || "4") + 1);
+ const invoiceNumber = "INV-" + (Math.max(Number(localStorage.getItem("lastInvoiceNumber") || "5"), 5) + 1);
+localStorage.setItem("lastInvoiceNumber", invoiceNumber.replace("INV-", ""));
 document.getElementById("invoiceNumber").textContent =
     invoiceNumber; 
   document.getElementById("invoiceDate").textContent =
