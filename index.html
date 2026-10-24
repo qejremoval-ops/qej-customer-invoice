@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer & Invoice App</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;padding:16px;background:#f2f4f7;color:#222}
+main{max-width:500px;margin:auto}
+h1{font-size:24px;text-align:center}
+h2{font-size:19px}
+section{background:white;padding:16px;margin:14px 0;border-radius:12px}
+label{display:block;margin-top:12px;font-weight:bold}
+input,textarea,button{box-sizing:border-box;width:100%;padding:12px;margin-top:6px;font-size:16px;border-radius:7px}
+input,textarea{border:1px solid #bbb}
+button{border:0;background:#167d3f;color:white;font-weight:bold;cursor:pointer}
+.secondary{background:#334155}
+#invoice{background:white;padding:20px}
+.line{border-bottom:1px solid #ddd;padding:12px 0}
+@media print{body{background:white;padding:0}body>*{display:none}main{display:block}main>*{display:none}#invoiceSection{display:block!important}#invoiceSection>*{display:block}}
+</style>
+</head>
+<body>
+<main>
+<h1>QUICK & EASY JUNK REMOVAL</h1>
+<section>
+<h2>Customer Information</h2>
+<label for="firstName">First Name</label>
+<input id="firstName" autocomplete="given-name" placeholder="First name">
+<label for="lastName">Last Name</label>
+<input id="lastName" autocomplete="family-name" placeholder="Last name">
+<label for="phone">Phone Number</label>
+<input id="phone" type="tel" autocomplete="tel" placeholder="Phone number">
+<button type="button" onclick="saveCustomer()">Save Customer</button>
+<p id="customerStatus" role="status"></p>
+</section>
+<section>
+<h2>Create Invoice</h2>
+<label for="description">Service Description</label>
+<textarea id="description" rows="3" placeholder="Describe the service"></textarea>
+<label for="price">Price ($)</label>
+<input id="price" type="number" min="0" step="0.01" placeholder="0.00">
+<button type="button" onclick="createInvoice()">Create Invoice</button>
+</section>
+<section id="invoiceSection">
+<div id="invoice">
+<h2>INVOICE</h2>
+<p><strong>QUICK & EASY JUNK REMOVAL</strong></p>
+<p id="invoiceNumber"></p>
+<p id="invoiceDate"></p>
+<hr>
+<h3>Bill To</h3>
+<p id="invoiceCustomer">Customer name will appear here</p>
+<p id="invoicePhone"></p>
+<div class="line">
+<strong>Description</strong>
+<p id="invoiceDescription">Service description</p>
+</div>
+<div class="line">
+<strong>Total: <span id="invoiceTotal">$0.00</span></strong>
+</div>
+<p>Thank you for your business!</p>
+</div>
+<button type="button" class="secondary" onclick="window.print()">Print / Save PDF</button>
+</section>
+</main>
+<script>
+function saveCustomer(){
+const first=document.getElementById('firstName').value.trim();
+const last=document.getElementById('lastName').value.trim();
+const phone=document.getElementById('phone').value.trim();
+if(!first||!last||!phone){alert('Please enter first name, last name, and phone number.');return;}
+document.getElementById('customerStatus').textContent='Customer information entered. Google Sheets connection will be added next.';
+}
+function createInvoice(){
+const first=document.getElementById('firstName').value.trim();
+const last=document.getElementById('lastName').value.trim();
+const phone=document.getElementById('phone').value.trim();
+const description=document.getElementById('description').value.trim();
+const rawPrice=document.getElementById('price').value;
+if(!first||!last||!phone){alert('Please enter the customer information first.');return;}
+if(rawPrice===''||Number(rawPrice)<0||!Number.isFinite(Number(rawPrice))){alert('Please enter a valid price.');return;}
+document.getElementById('invoiceNumber').textContent='Invoice date: '+new Date().toLocaleDateString();
+document.getElementById('invoiceDate').textContent='Invoice for customer';
+document.getElementById('invoiceCustomer').textContent=first+' '+last;
+document.getElementById('invoicePhone').textContent=phone;
+document.getElementById('invoiceDescription').textContent=description||'Service description not entered';
+document.getElementById('invoiceTotal').textContent=Number(rawPrice).toLocaleString('en-US',{style:'currency',currency:'USD'});
+}
+</script>
+</body>
+</html>
