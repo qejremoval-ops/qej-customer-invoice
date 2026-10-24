@@ -139,8 +139,9 @@ async function createInvoice() {
     return;
   }
 
-  document.getElementById("invoiceNumber").textContent =
-    "Invoice number pending";
+ const invoiceNumber = "INV-" + Date.now();
+document.getElementById("invoiceNumber").textContent =
+    invoiceNumber; 
   document.getElementById("invoiceDate").textContent =
     "Date: " + new Date().toLocaleDateString();
   document.getElementById("invoiceCustomer").textContent =
@@ -157,6 +158,7 @@ async function createInvoice() {
   try {
     await sendToSheets({
       action: "saveInvoice",
+      invoiceNumber,
       firstName,
       lastName,
       phoneNumber,
