@@ -18,7 +18,16 @@ button{border:0;background:#167d3f;color:white;font-weight:bold;cursor:pointer}
 .secondary{background:#334155}
 #invoice{background:white;padding:20px}
 .line{border-bottom:1px solid #ddd;padding:12px 0}
-@media print{body{background:white;padding:0}body>*{display:none}main{display:block}main>*{display:none}#invoiceSection{display:block!important}#invoiceSection>*{display:block}}
+
+@media print {
+  body{background:white;padding:0}
+  body>*{display:none}
+  main{display:block}
+  main>*{display:none}
+  #invoiceSection{display:block!important}
+  #invoiceSection>*{display:block}
+  button{display:none!important}
+}
 </style>
 </head>
 <body>
